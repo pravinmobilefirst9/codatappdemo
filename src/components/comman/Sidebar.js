@@ -20,7 +20,9 @@ const Sidebar = () => {
     <div>
       <aside className="shadow-xl h-screen flex-shrink-0 hidden w-64 bg-white dark:bg-gray-800 lg:block">
         <div className="py-4 text-gray-500 dark:text-gray-400">
-          <div className="ml-6 font-bold text-black text-sm">Company Name : </div>
+          <div className="ml-6 font-bold text-black text-sm">
+            Company Name :{" "}
+          </div>
           <div
             className="ml-6 border-2 mr-4 px-4 text-xl font-bold text-gray-800 dark:text-gray-200"
             href="#"
@@ -28,7 +30,7 @@ const Sidebar = () => {
             <input
               type="text"
               className="focus:outline-none w-48"
-              value={title}
+              value={title === "null" ? "" : title}
               placeholder="Ex. CODAT.IO"
               onChange={(e) => handleInputChange(e)}
             />
