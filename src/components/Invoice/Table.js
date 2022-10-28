@@ -169,6 +169,13 @@ const Table = () => {
                       <td className="px-4 py-3">{data?.issueDate}</td>
                       <td className="px-4 py-3">{data?.dueDate}</td>
                       <td className="px-4 py-3">
+                        {data?.amountDue
+                          .toString()
+                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                          " " +
+                          data?.currency}
+                      </td>
+                      <td className="px-4 py-3">
                         {data?.totalAmount
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",") +

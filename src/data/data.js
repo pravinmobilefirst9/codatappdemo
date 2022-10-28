@@ -49,6 +49,9 @@ export const headerData = [
     title: "Due Date",
   },
   {
+    title: "due Amount",
+  },
+  {
     title: "Total Amount",
   },
   {
