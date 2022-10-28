@@ -5,36 +5,20 @@ import { baseURL } from "../../data/const";
 
 const LinkAccount = () => {
   const [status, setStatus] = useState();
-  const [state, setState] = useState(true);
-  const [check, setCheck] = useState(false);
   const companyId = localStorage.getItem("companyId");
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (status === "Linked") {
-  //     navigate("/invoice");
-  //     setStatus("");
-  //   }
-  // });
-
   useEffect(() => {
-    setTimeout(() => {
-      if (check) {
-        authApiCall();
-        if (status === "Linked") {
-          navigate("/invoice");
-          setStatus("");
-        }
-      }
-      setState(!state);
-    }, 5000);
-  }, [state]);
+    if (status === "Linked") {
+      navigate("/invoice");
+      setStatus("");
+    }
+  });
 
   const authApiCall = () => {
     axios
       .get(baseURL + `api/InitializeConnection/${companyId}`)
       .then((response) => {
         setStatus(Object.values(response?.data)[0].results[0]?.status);
-        setCheck(true);
       })
       .catch((err) => {
         console.log(err);
@@ -51,9 +35,9 @@ const LinkAccount = () => {
         <div>
           <button
             onClick={authApiCall}
-            disabled={status === "Linked" ? false : true}
+            disabled={companyId ? false : true}
             className={`${
-              status === "Linked"
+              companyId
                 ? "active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                 : "opacity-50"
             } px-5 mt-5 py-3 font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg`}
