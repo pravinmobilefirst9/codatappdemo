@@ -16,8 +16,13 @@ const Table = () => {
   const [modalData, setModalData] = useState();
   const [connections, setConnections] = useState([]);
   const [selectedOption, setSelectedOption] = useState(true);
+  const [selectedOptionDueAmount, setSelectedOptionDueAmount] = useState(false);
   const [query, setQuery] = useState("");
+  const [state, setState] = useState(true);
 
+  useEffect(() => {
+    setState(!state);
+  }, [selectedOptionDueAmount]);
   const paymentid =
     modalData?.paymentAllocations[modalData?.paymentAllocations.length - 1]
       ?.payment?.id;
@@ -61,11 +66,34 @@ const Table = () => {
 
   const onClickStatus = () => {
     setSelectedOption(!selectedOption);
-    const sortData = [...users].sort((a, b) => {
+    let sortData = [...users].sort((a, b) => {
       if (selectedOption ? a.status < b.status : a.status > b.status) {
         return -1;
       }
-      if (selectedOption ? a.status > b.status : a.status < b.status) {
+      if (!selectedOption ? a.status > b.status : a.status < b.status) {
+        return 1;
+      }
+      return 0;
+    });
+    setUsers(sortData);
+    setPage(0);
+  };
+
+  const onClickDueAmount = () => {
+    setSelectedOptionDueAmount(!selectedOptionDueAmount);
+    let sortData = [...users].sort((a, b) => {
+      if (
+        selectedOptionDueAmount
+          ? parseInt(a.amountDue, 10) < parseInt(b.amountDue, 10)
+          : parseInt(a.amountDue, 10) > parseInt(b.amountDue, 10)
+      ) {
+        return -1;
+      }
+      if (
+        !selectedOptionDueAmount
+          ? parseInt(a.amountDue, 10) > parseInt(b.amountDue, 10)
+          : parseInt(a.amountDue, 10) < parseInt(b.amountDue, 10)
+      ) {
         return 1;
       }
       return 0;
@@ -131,19 +159,39 @@ const Table = () => {
                     return (
                       <th className="px-4 py-3" key={idx}>
                         {data?.title === "Status" ? (
-                          <button
-                            onClick={onClickStatus}
-                            className="uppercase flex items-center justify-center focus:border-none"
-                          >
-                            {data?.title}
-                            {!selectedOption ? (
-                              <div className="h-0 w-0 ml-1 border-x-8 border-x-transparent border-b-[10px] border-b-black-500"></div>
-                            ) : (
-                              <div className="h-0 w-0 ml-1 border-x-8 border-x-transparent border-t-[10px] border-t-black-500"></div>
-                            )}
-                          </button>
+                          <>
+                            <button
+                              onClick={onClickStatus}
+                              className="uppercase flex items-center justify-center focus:border-none"
+                            >
+                              {data?.title}
+                              {selectedOption ? (
+                                <div className="h-0 w-0 ml-1 border-x-8 border-x-transparent border-b-[10px] border-b-black-500"></div>
+                              ) : (
+                                <div className="h-0 w-0 ml-1 border-x-8 border-x-transparent border-t-[10px] border-t-black-500"></div>
+                              )}
+                            </button>
+                          </>
                         ) : (
-                          data?.title
+                          <>
+                            {data?.title === "due Amount" ? (
+                              <>
+                                <button
+                                  onClick={onClickDueAmount}
+                                  className="uppercase flex items-center justify-center focus:border-none"
+                                >
+                                  {data?.title}
+                                  {!selectedOptionDueAmount ? (
+                                    <div className="h-0 w-0 ml-1 border-x-8 border-x-transparent border-b-[10px] border-b-black-500"></div>
+                                  ) : (
+                                    <div className="h-0 w-0 ml-1 border-x-8 border-x-transparent border-t-[10px] border-t-black-500"></div>
+                                  )}
+                                </button>
+                              </>
+                            ) : (
+                              <>{data?.title}</>
+                            )}
+                          </>
                         )}
                       </th>
                     );
