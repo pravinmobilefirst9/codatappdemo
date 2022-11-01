@@ -344,7 +344,7 @@ const FormModal = ({
                         className="text-2xl pt-10 mb-10"
                         style={{ color: "green", marginTop: "2px" }}
                       >
-                        Reconcile done sucessfully
+                        Payment reconciled successfully!
                       </div>
                     )}
                     {error && (
