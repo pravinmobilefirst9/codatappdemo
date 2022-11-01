@@ -11,7 +11,7 @@ function App() {
       <Route path="/add-company" exact element={<AddCompany />} />
       <Route path="/auth" exact element={<Accounting />} />
       <Route path="/invoice" exact element={<Invoice />} />
-      {/* <Route path="/redirect" exact element={<Redirect />} /> */}
+      <Route path="/redirect" exact element={<Redirect />} />
       <Route path="/" element={<Navigate replace to="/auth" />} />
     </Routes>
   );
