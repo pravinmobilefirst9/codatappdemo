@@ -47,7 +47,7 @@ const Redirect = () => {
               <>Click Here to go Invoice page</>
             </button>
           </div>
-          <div className="absolute top-10 left-10 text-4xl">CODAT.IO</div>
+          <div className="absolute top-10 left-10 text-4xl">CODAT</div>
         </div>
       </div>
     </div>
