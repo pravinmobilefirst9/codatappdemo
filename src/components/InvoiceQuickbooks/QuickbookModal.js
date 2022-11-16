@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { quickbookModalFormData } from "../../data/data";
+import axios from "axios";
+import { quickbookPaymentUrl, quickbookPaymentHeader } from "../../data/const";
 
 const QuickbookModal = ({
   modalData,
@@ -25,9 +27,47 @@ const QuickbookModal = ({
     setPaymentType("Credit Card");
   };
 
+  var FormData = JSON.stringify({
+    CustomerRef: {
+      value: "58",
+      name: "TEST123",
+    },
+    TotalAmt: 100,
+    Line: [
+      {
+        Amount: 100,
+        LinkedTxn: [
+          {
+            TxnId: "173",
+            TxnType: "Invoice",
+          },
+        ],
+      },
+    ],
+  });
+
+  const headers = {
+    "User-Agent": "QBOV3-OAuth2-Postman-Collection",
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Authorization: quickbookPaymentHeader,
+  };
+
+  const submitPayment = () => {
+    axios
+      .post(quickbookPaymentUrl, FormData, headers)
+      .then((responce) => {
+        console.log(responce);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handlePayment = () => {
     setDataTrue(true);
     console.log(paymentAmount, paymentType, note);
+    submitPayment();
   };
 
   return (
