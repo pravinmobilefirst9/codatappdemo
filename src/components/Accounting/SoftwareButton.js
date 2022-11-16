@@ -31,12 +31,15 @@ const SoftwareButton = () => {
       navigate("/add-company", { state: data?.name });
     }
     if (data?.name === "quickbooksonline") {
-      window.open(
-        authUrl,
-        "",
-        "toolbar=no,status=no,menubar=no,location=center,scrollbars=no,resizable=no,height=500,width=657"
-      );
+      navigate("/invoices-quickbooks");
     }
+    // if (data?.name === "quickbooksonline") {
+    //   window.open(
+    //     authUrl,
+    //     "",
+    //     "toolbar=no,status=no,menubar=no,location=center,scrollbars=no,resizable=no,height=500,width=657"
+    //   );
+    // }
   };
 
   return (
