@@ -9,7 +9,7 @@ import Search from "../Invoice/Search";
 import { dummydata } from "./dummydata";
 
 const QuickBookTable = () => {
-  const [users, setUsers] = useState(dummydata[0]?.QueryResponse?.Invoice);
+  const [users, setUsers] = useState([]);
   const [loader, setLoader] = useState(false);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);

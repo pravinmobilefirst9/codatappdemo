@@ -27,28 +27,30 @@ const QuickbookModal = ({
     setPaymentType("Credit Card");
   };
 
-  var FormData = JSON.stringify({
+  console.log(modalData);
+
+  var FormData = {
     CustomerRef: {
-      value: "58",
-      name: "TEST123",
+      value: modalData?.CustomerRef?.value,
+      name: modalData?.CustomerRef?.name,
     },
-    TotalAmt: 100,
+    TotalAmt: modalData?.TotalAmt,
     Line: [
       {
-        Amount: 100,
+        Amount: paymentAmount,
         LinkedTxn: [
           {
-            TxnId: "173",
-            TxnType: "Invoice",
+            TxnId: modalData?.LinkedTxn[0]?.TxnId,
+            TxnType: modalData?.LinkedTxn[0]?.TxnType,
           },
         ],
       },
     ],
-  });
+  };
 
   const headers = {
-    "User-Agent": "QBOV3-OAuth2-Postman-Collection",
-    Accept: "application/json",
+    // "User-Agent": "QBOV3-OAuth2-Postman-Collection",
+    // Accept: "application/json",
     "Content-Type": "application/json",
     Authorization: quickbookPaymentHeader,
   };
@@ -58,14 +60,15 @@ const QuickbookModal = ({
       .post(quickbookPaymentUrl, FormData, headers)
       .then((responce) => {
         console.log(responce);
+        setDataTrue(true);
       })
       .catch((err) => {
         console.log(err);
+        setError(true);
       });
   };
 
   const handlePayment = () => {
-    setDataTrue(true);
     console.log(paymentAmount, paymentType, note);
     submitPayment();
   };
@@ -237,7 +240,7 @@ const QuickbookModal = ({
                       )}
                       {error && (
                         <div style={{ color: "red", marginTop: "2px" }}>
-                          data is not available
+                          Please try after some time. Network error
                         </div>
                       )}
                     </div>
