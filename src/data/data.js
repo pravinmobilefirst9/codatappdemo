@@ -32,6 +32,30 @@ export const buttonData = [
   },
 ];
 
+export const headerDataQuickbook = [
+  { title: "id" },
+  { title: "Name" },
+  { title: "Invoice id" },
+  {
+    title: "Issue Date",
+  },
+  {
+    title: "Due Date",
+  },
+  {
+    title: "balance",
+  },
+  {
+    title: "Total Amount",
+  },
+  {
+    title: "Currency",
+  },
+  {
+    title: "Payment Reconciliation",
+  },
+];
+
 export const headerData = [
   {
     title: "ID",
