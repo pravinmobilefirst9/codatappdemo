@@ -2,24 +2,21 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import Pagination from "../Invoice/Pagination";
-import FormModal from "../Invoice/FormModal";
+import QuickbookModal from "./QuickbookModal";
 import { headerDataQuickbook } from "../../data/data";
-import { quickbookinvoice, baseURL } from "../../data/const";
+import { quickbookinvoice } from "../../data/const";
 import Search from "../Invoice/Search";
 import { dummydata } from "./dummydata";
 
 const QuickBookTable = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(dummydata[0]?.QueryResponse?.Invoice);
   const [loader, setLoader] = useState(false);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState();
-  const [connections, setConnections] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(true);
   const [selectedOptionbalance, setSelectedOptionbalance] = useState(false);
   const [query, setQuery] = useState("");
-  const [state, setState] = useState(true);
 
   //   console.log(dummydata[0]?.QueryResponse?.Invoice);
 
@@ -28,9 +25,7 @@ const QuickBookTable = () => {
     axios
       .get(quickbookinvoice)
       .then((response) => {
-        // Object.values(response.data)[0].results
         setUsers(response?.data?.Invoice);
-        // console.log(response?.data?.Invoice);
         setLoader(false);
       })
       .catch((err) => {
@@ -66,11 +61,26 @@ const QuickBookTable = () => {
     setPage(0);
   };
 
+  const formModalData = (data) => {
+    setShowModal(true);
+    setModalData(data);
+    console.log(data)
+  };
+
   return (
     <div className="p-5 mt-10 lg:mt-2 lg:p-10">
       <h4 className="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
         Invoices list
       </h4>
+
+      {/* modal */}
+      <QuickbookModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setModalData={setModalData}
+        modalData={modalData}
+      />
+
       <div className="float-right m-5 w-48 sm:w-64">
         {/* <Search setQuery={setQuery} /> */}
       </div>
@@ -191,13 +201,9 @@ const QuickBookTable = () => {
                       <td className="px-4 py-3">{data?.CurrencyRef?.value}</td>
                       <td className="px-4 py-3">
                         <button
-                          //   onClick={() => formModalData(data)}
-                          disabled={data?.amountDue > 0 ? false : true}
-                          className={`${
-                            data?.amountDue > 0
-                              ? "opacity-100 hover:bg-purple-700"
-                              : "opacity-50"
-                          } px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600  focus:outline-none focus:shadow-outline-purple`}
+                          onClick={() => formModalData(data)}
+                          disabled={false}
+                          className={`opacity-100 hover:bg-purple-700 px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600  focus:outline-none focus:shadow-outline-purple`}
                         >
                           Click Here
                         </button>

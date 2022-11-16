@@ -89,6 +89,30 @@ export const headerData = [
   },
 ];
 
+export const quickbookModalFormData = [
+  {
+    title: "Invoice Id",
+  },
+  {
+    title: "Balance",
+  },
+  {
+    title: "Total Amount",
+  },
+  {
+    title: "Due Date",
+  },
+  {
+    title: "Payment Amount",
+  },
+  {
+    title: "Payment Method",
+  },
+  {
+    title: "Note",
+  },
+];
+
 export const modalFormData = [
   {
     title: "Invoice Id",
