@@ -3,6 +3,20 @@ import QuickbookTable from "../components/InvoiceQuickbooks/QuickBookTable";
 import Sidebar from "../components/comman/Sidebar";
 
 const InvoicesQuickBooks = () => {
+  const response = fetch(
+    "https://codatquickbook.betabularasa.com/quickbookapi.php?v=77",
+    {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        // Authorization: `Bearer: ${token}`,
+        "Content-Type": "application/json",
+      },
+      // body: JSON.stringify(data),
+    }
+  );
+
+  console.log(response);
   return (
     <div>
       <div className="relative flex items-start justify-start">
