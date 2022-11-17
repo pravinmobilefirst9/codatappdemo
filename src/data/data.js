@@ -32,6 +32,30 @@ export const buttonData = [
   },
 ];
 
+export const headerDataQuickbook = [
+  { title: "id" },
+  { title: "Name" },
+  { title: "Invoice id" },
+  {
+    title: "Issue Date",
+  },
+  {
+    title: "Due Date",
+  },
+  {
+    title: "balance",
+  },
+  {
+    title: "Total Amount",
+  },
+  {
+    title: "Currency",
+  },
+  {
+    title: "Payment Reconciliation",
+  },
+];
+
 export const headerData = [
   {
     title: "ID",
@@ -62,6 +86,30 @@ export const headerData = [
   },
   {
     title: "Payment Reconciliation",
+  },
+];
+
+export const quickbookModalFormData = [
+  {
+    title: "Invoice Id",
+  },
+  {
+    title: "Balance",
+  },
+  {
+    title: "Total Amount",
+  },
+  {
+    title: "Due Date",
+  },
+  {
+    title: "Payment Amount",
+  },
+  {
+    title: "Payment Method",
+  },
+  {
+    title: "Note",
   },
 ];
 
