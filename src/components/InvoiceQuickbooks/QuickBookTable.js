@@ -19,11 +19,20 @@ const QuickBookTable = () => {
   const [query, setQuery] = useState("");
 
   //   console.log(dummydata[0]?.QueryResponse?.Invoice);
-  const randomnumber = Math.floor(Math.random() * 100 + 1);
+
+  var current = new Date();
+  var date = current.getDate();
+  var hour = current.getHours();
+  var min = current.getMinutes();
+  var sec = current.getSeconds();
+
+  var randomNumber =
+    date.toString() + hour.toString() + min.toString() + sec.toString();
+
   const fetchInvoice = () => {
     setLoader(true);
     axios
-      .get(quickbookinvoice + randomnumber)
+      .get(quickbookinvoice + randomNumber)
       .then((response) => {
         if (response?.data?.Invoice) {
           setUsers(response?.data?.Invoice);

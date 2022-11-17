@@ -3,8 +3,18 @@ import QuickbookTable from "../components/InvoiceQuickbooks/QuickBookTable";
 import Sidebar from "../components/comman/Sidebar";
 
 const InvoicesQuickBooks = () => {
+  var current = new Date();
+  var date = current.getDate();
+  var hour = current.getHours();
+  var min = current.getMinutes();
+  var sec = current.getSeconds();
+
+  var randomNumber =
+    date.toString() + hour.toString() + min.toString() + sec.toString();
+
   const response = fetch(
-    "https://codatquickbook.betabularasa.com/quickbookapi.php?v=77",
+    "https://codatquickbook.betabularasa.com/quickbookapi.php?v=" +
+      randomNumber,
     {
       method: "GET",
       mode: "cors",
