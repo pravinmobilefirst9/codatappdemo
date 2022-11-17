@@ -49,8 +49,6 @@ const QuickbookModal = ({
   };
 
   const headers = {
-    // "User-Agent": "QBOV3-OAuth2-Postman-Collection",
-    // Accept: "application/json",
     "Content-Type": "application/json",
     Authorization: quickbookPaymentHeader,
   };
