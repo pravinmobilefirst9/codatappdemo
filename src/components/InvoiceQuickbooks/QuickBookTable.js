@@ -19,13 +19,15 @@ const QuickBookTable = () => {
   const [query, setQuery] = useState("");
 
   //   console.log(dummydata[0]?.QueryResponse?.Invoice);
-
+  const randomnumber = Math.floor(Math.random() * 100 + 1);
   const fetchInvoice = () => {
     setLoader(true);
     axios
-      .get(quickbookinvoice)
+      .get(quickbookinvoice + randomnumber)
       .then((response) => {
-        setUsers(response?.data?.Invoice);
+        if (response?.data?.Invoice) {
+          setUsers(response?.data?.Invoice);
+        }
         setLoader(false);
       })
       .catch((err) => {
@@ -64,7 +66,7 @@ const QuickBookTable = () => {
   const formModalData = (data) => {
     setShowModal(true);
     setModalData(data);
-    console.log(data)
+    console.log(data);
   };
 
   return (
