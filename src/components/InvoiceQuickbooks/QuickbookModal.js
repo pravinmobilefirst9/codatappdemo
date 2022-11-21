@@ -233,7 +233,7 @@ const QuickbookModal = ({
                           className="text-2xl pt-10 mb-10"
                           style={{ color: "green", marginTop: "2px" }}
                         >
-                          Payment done successfully!
+                          Payment reconciled successfully!
                         </div>
                       )}
                       {error && (
