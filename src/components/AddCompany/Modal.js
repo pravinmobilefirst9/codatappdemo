@@ -29,8 +29,10 @@ export default function Modal({ platformName }) {
     axios
       .get(baseURL + `api/InitializeConnection/${companyId}`)
       .then((response) => {
-        setLink(Object.values(response?.data)[0].results[0]?.linkUrl);
-        setStatus(Object.values(response?.data)[0].results[0]?.status);
+        // setLink(Object.values(response?.data)[0].results[0]?.linkUrl);
+        setStatus(
+          Object.values(response?.data)[0].results[0]?.status
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -52,24 +54,25 @@ export default function Modal({ platformName }) {
   }, [state]);
 
   const addCompanyApi = () => {
-    const data = { name: companyName, platformType: platformName };
+    const data = { name: companyName };
     axios
       .post(baseURL + "api/addCompany", data)
       .then((response) => {
-        console.log(Object.values(response?.data)[0].id);
-        axios
-          .get(
-            baseURL +
-              `api/InitializeConnection/${Object.values(response?.data)[0].id}`
-          )
-          .then((response) => {
-            setLink(Object.values(response?.data)[0].results[0]?.linkUrl);
-            setCheck(true);
-            // setShowModal(false);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        setLink(Object.values(response?.data)[0].redirect);
+        setCheck(true);
+        // axios
+        //   .get(
+        //     baseURL +
+        //       `api/InitializeConnection/${Object.values(response?.data)[0].id}`
+        //   )
+        //   .then((response) => {
+        //     setLink(Object.values(response?.data)[0].results[0]?.linkUrl);
+        //     setCheck(true);
+        //     // setShowModal(false);
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
         localStorage.setItem("companyId", Object.values(response?.data)[0].id);
       })
       .catch((err) => {
