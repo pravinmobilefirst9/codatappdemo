@@ -26,7 +26,6 @@ const InvoicesQuickBooks = () => {
     }
   );
 
-  console.log(response);
   return (
     <div>
       <div className="relative flex items-start justify-start">
