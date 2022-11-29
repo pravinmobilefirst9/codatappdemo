@@ -41,7 +41,6 @@ export default function Modal({ platformName }) {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log(state);
       if (check) {
         authApiCall();
         if (status === "Linked") {
