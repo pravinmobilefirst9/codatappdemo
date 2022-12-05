@@ -27,12 +27,12 @@ const SoftwareButton = () => {
 
   const selectAuth = (data) => {
     // getToken();
-    if (data?.name === "sandbox") {
+    if (data?.name === "sandbox" || data?.name === "quickbooksonline") {
       navigate("/add-company", { state: data?.name });
     }
-    if (data?.name === "quickbooksonline") {
-      navigate("/invoices-quickbooks");
-    }
+    // if (data?.name === "quickbooksonline") {
+    //   navigate("/invoices-quickbooks");
+    // }
     // if (data?.name === "quickbooksonline") {
     //   window.open(
     //     authUrl,

@@ -27,8 +27,6 @@ const QuickbookModal = ({
     setPaymentType("Credit Card");
   };
 
-  console.log(modalData);
-
   var FormData = {
     CustomerRef: {
       value: modalData?.CustomerRef?.value,
@@ -67,7 +65,6 @@ const QuickbookModal = ({
   };
 
   const handlePayment = () => {
-    console.log(paymentAmount, paymentType, note);
     submitPayment();
   };
 

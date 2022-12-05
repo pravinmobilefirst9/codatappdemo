@@ -6,11 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const AddCompany = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  // useEffect(() => {
-    // if (!location?.state) {
-      // navigate("/");
-    // }
-  // });
+
   return (
     <div>
       <div className="flex items-center justify-center flex-col xl:flex-row">
