@@ -75,7 +75,6 @@ const QuickBookTable = () => {
   const formModalData = (data) => {
     setShowModal(true);
     setModalData(data);
-    console.log(data);
   };
 
   return (

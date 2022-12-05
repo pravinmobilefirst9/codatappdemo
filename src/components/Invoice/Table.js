@@ -19,6 +19,7 @@ const Table = () => {
   const [selectedOptionDueAmount, setSelectedOptionDueAmount] = useState(false);
   const [query, setQuery] = useState("");
   const [state, setState] = useState(true);
+  const [refresh, setRefresh] = useState(true);
 
   useEffect(() => {
     setState(!state);
@@ -57,7 +58,7 @@ const Table = () => {
   useEffect(() => {
     fetchInvoice();
     fetchConnections();
-  }, []);
+  }, [refresh]);
 
   const formModalData = (data) => {
     setShowModal(true);
@@ -117,6 +118,8 @@ const Table = () => {
         modalData={modalData}
         paymentid={paymentid}
         connections={connections}
+        setRefresh={setRefresh}
+        refresh={refresh}
       />
       {loader && (
         <table className="w-full whitespace-no-wrap">

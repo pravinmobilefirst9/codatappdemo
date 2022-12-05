@@ -11,6 +11,8 @@ const FormModal = ({
   setShowModal,
   paymentid,
   connections,
+  setRefresh,
+  refresh,
 }) => {
   const [dataTrue, setDataTrue] = useState(false);
   const [error, setError] = useState(false);
@@ -20,145 +22,95 @@ const FormModal = ({
   const [note, setNote] = useState("note");
 
   const companyId = localStorage.getItem("companyId");
-  console.log(modalData);
+
+  var current = new Date();
+  var date = current.getDate();
+  var year = current.getFullYear();
+  var month = current.getMonth();
+  var hour = current.getHours();
+  var min = current.getMinutes();
+  var sec = current.getSeconds();
+
+  var finalDate = `${year}-${month + 1}-${date}T${hour}:${min}:${Math.round(
+    sec
+  )}`;
+
+  const dataSandbox = {
+    customerRef: {
+      id: modalData?.customerRef?.id,
+      companyName: modalData?.customerRef?.companyName,
+    },
+    accountRef: {
+      id: modalData?.lineItems[0]?.accountRef?.id,
+      name: modalData?.lineItems[0]?.accountRef?.name,
+    },
+    lines: [
+      {
+        links: [
+          {
+            type: "Invoice",
+            id: modalData?.id,
+            amount: -paymentAmount,
+            currencyRate: 1,
+          },
+        ],
+        amount: Math.floor(paymentAmount),
+      },
+    ],
+    id: modalData?.id,
+    totalAmount: modalData?.totalAmount,
+    currency: modalData?.currency,
+    currencyRate: 1,
+    date: finalDate,
+    note: note,
+  };
+
+  const dataQuickbook = {
+    customerRef: {
+      id: modalData?.customerRef?.id,
+      companyName: modalData?.customerRef?.companyName,
+    },
+    date: finalDate,
+    totalAmount: modalData?.totalAmount,
+    note: note,
+    lines: [
+      {
+        amount: paymentAmount,
+        links: [
+          {
+            type: "Invoice",
+            id: modalData?.id,
+            amount: -paymentAmount,
+          },
+        ],
+      },
+    ],
+  };
 
   const fetchPaymentData = () => {
     setLoader(true);
     axios
       .post(
         baseURL + `api/pushPaymentData/${companyId}/${connections[0]?.id}`,
-
-        {
-          customerRef: {
-            id: modalData?.customerRef?.id,
-            companyName: modalData?.customerRef?.companyName,
-          },
-          accountRef: {
-            id: modalData?.lineItems[0]?.accountRef?.id,
-            name: modalData?.lineItems[0]?.accountRef?.name,
-          },
-          lines: [
-            {
-              links: [
-                {
-                  type: "Invoice",
-                  id: modalData?.id,
-                  amount: -paymentAmount,
-                  currencyRate: 1,
-                },
-              ],
-              amount: Math.floor(paymentAmount),
-            },
-          ],
-          id: modalData?.id,
-          totalAmount: modalData?.totalAmount,
-          currency: modalData?.currency,
-          currencyRate: 1,
-          date: "2022-10-21T09:28:59",
-          note: note,
-        }
+        dataQuickbook
       )
       .then((response) => {
         setDataTrue(true);
         setLoader(false);
+        axios.post(baseURL + `api/syncPaymentData/${companyId}`);
       })
       .catch((err) => {
         console.log(err);
         setLoader(false);
       });
   };
-
-  const fetchPaymentData1 = () => {
-    setLoader(true);
-    axios
-      .post(
-        baseURL + `api/pushPaymentData/${companyId}/${connections[0]?.id}`,
-        {
-          body: {
-            id: "x",
-            customerRef: {
-              id: modalData?.customerRef?.id,
-              companyName: modalData?.customerRef?.companyName,
-            },
-            accountRef: {
-              id: modalData?.lineItems[0]?.accountRef?.id,
-              name: modalData?.lineItems[0]?.accountRef?.name,
-            },
-            paymentMethodRef: {
-              id: "x",
-              name: paymentType,
-            },
-            totalAmount: modalData?.totalAmount,
-            currency: modalData?.currency,
-            currencyRate: modalData?.currencyRate,
-            date: "2022-10-14T06:23:15.292Z",
-            note: note,
-            lines: [
-              {
-                amount: paymentAmount,
-                links: [
-                  {
-                    type: "Invoice",
-                    id: modalData?.id,
-                    amount: -paymentAmount,
-                    currencyRate: 1,
-                  },
-                ],
-                allocatedOnDate: "2022-10-14T06:23:15.292Z",
-              },
-            ],
-            modifiedDate: "2022-10-14T06:23:15.292Z",
-            sourceModifiedDate: "2022-10-14T06:23:15.292Z",
-            reference: "x",
-            metadata: {
-              isDeleted: true,
-            },
-          },
-        }
-      )
-      .then((response) => {
-        setDataTrue(true);
-        setLoader(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoader(false);
-      });
-  };
-  // const fetchPaymentData = () => {
-  //   setLoader(true);
-  //   axios
-  //     .get(baseURL + `api/paymentData/${companyId}/${paymentid}`)
-  //     .then((response) => {
-  //       // console.log(response.data?.data);
-  //       axios
-  //         .post(
-  //           baseURL + `api/pushPaymentData/${companyId}/${connections[0]?.id}`,
-  //           {
-  //             body: response.data?.data,
-  //           }
-  //         )
-  //         .then((response) => {
-  //           setDataTrue(true);
-  //           setLoader(false);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //           setLoader(false);
-  //         });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       setError(true);
-  //       setLoader(false);
-  //     });
-  // };
 
   const modalClose = () => {
     setDataTrue(false);
     setError(false);
     setLoader(false);
     setShowModal(false);
+    setRefresh(!refresh);
   };
 
   const handleReconciliation = () => {
