@@ -11,6 +11,8 @@ const FormModal = ({
   setShowModal,
   paymentid,
   connections,
+  setRefresh,
+  refresh,
 }) => {
   const [dataTrue, setDataTrue] = useState(false);
   const [error, setError] = useState(false);
@@ -95,6 +97,7 @@ const FormModal = ({
       .then((response) => {
         setDataTrue(true);
         setLoader(false);
+        axios.post(baseURL + `api/syncPaymentData/${companyId}`);
       })
       .catch((err) => {
         console.log(err);
@@ -107,6 +110,7 @@ const FormModal = ({
     setError(false);
     setLoader(false);
     setShowModal(false);
+    setRefresh(!refresh);
   };
 
   const handleReconciliation = () => {
