@@ -9,25 +9,26 @@ const Redirect = () => {
   const companyId = localStorage.getItem("companyId");
   const navigate = useNavigate();
   const authApiCall = () => {
-    axios
-      .get(baseURL + `api/InitializeConnection/${companyId}`)
-      .then((response) => {
-        if (Object.values(response?.data)[0].results[0]?.status === "Linked") {
-          navigate("/invoice");
-          toast.success("Authentication done", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        } else {
-          toast.error("Some Error happning please try again in some time !", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        }
-      })
-      .catch((err) => {
-        toast.error("Some Error happning please try again later !", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      });
+    navigate("/invoice");
+    // axios
+    //   .get(baseURL + `api/InitializeConnection/${companyId}`)
+    //   .then((response) => {
+    //     if (Object.values(response?.data)[0].results[0]?.status === "Linked") {
+    //       navigate("/invoice");
+    //       toast.success("Authentication done", {
+    //         position: toast.POSITION.TOP_RIGHT,
+    //       });
+    //     } else {
+    //       toast.error("Some Error happning please try again in some time !", {
+    //         position: toast.POSITION.TOP_RIGHT,
+    //       });
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     toast.error("Some Error happning please try again later !", {
+    //       position: toast.POSITION.TOP_RIGHT,
+    //     });
+    //   });
   };
 
   return (
