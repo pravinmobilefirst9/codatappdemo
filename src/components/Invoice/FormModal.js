@@ -13,6 +13,8 @@ const FormModal = ({
   connections,
   setRefresh,
   refresh,
+  refreshPage,
+  setRefreshPage,
 }) => {
   const [dataTrue, setDataTrue] = useState(false);
   const [error, setError] = useState(false);
@@ -71,7 +73,10 @@ const FormModal = ({
       companyName: modalData?.customerRef?.companyName,
     },
     date: finalDate,
-    totalAmount: modalData?.totalAmount,
+    totalAmount:
+      modalData?.status === "PartiallyPaid"
+        ? paymentAmount
+        : modalData?.totalAmount,
     note: note,
     lines: [
       {
@@ -95,9 +100,15 @@ const FormModal = ({
         dataQuickbook
       )
       .then((response) => {
-        setDataTrue(true);
-        setLoader(false);
-        axios.post(baseURL + `api/syncPaymentData/${companyId}`);
+        axios
+          .post(baseURL + `api/syncPaymentData/${companyId}`)
+          .then((response) => {
+            setLoader(false);
+            setDataTrue(true);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -111,6 +122,9 @@ const FormModal = ({
     setLoader(false);
     setShowModal(false);
     setRefresh(!refresh);
+    if (modalData?.status === "PartiallyPaid") {
+      setRefreshPage(true);
+    }
   };
 
   const handleReconciliation = () => {

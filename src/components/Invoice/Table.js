@@ -20,6 +20,7 @@ const Table = () => {
   const [query, setQuery] = useState("");
   const [state, setState] = useState(true);
   const [refresh, setRefresh] = useState(true);
+  const [refreshPage, setRefreshPage] = useState(false);
 
   useEffect(() => {
     setState(!state);
@@ -36,11 +37,15 @@ const Table = () => {
       .get(baseURL + `api/fetchInvoice/${companyId}`)
       .then((response) => {
         setUsers(Object.values(response.data)[0].results);
-        setLoader(false);
+        if (!refreshPage) {
+          setLoader(false);
+        }
       })
       .catch((err) => {
         console.log(err);
-        setLoader(false);
+        if (!refresh) {
+          setLoader(false);
+        }
       });
   };
 
@@ -58,6 +63,12 @@ const Table = () => {
   useEffect(() => {
     fetchInvoice();
     fetchConnections();
+    setLoader(true);
+    if (refreshPage) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+    }
   }, [refresh]);
 
   const formModalData = (data) => {
@@ -120,6 +131,8 @@ const Table = () => {
         connections={connections}
         setRefresh={setRefresh}
         refresh={refresh}
+        refreshPage={refreshPage}
+        setRefreshPage={setRefreshPage}
       />
       {loader && (
         <table className="w-full whitespace-no-wrap">

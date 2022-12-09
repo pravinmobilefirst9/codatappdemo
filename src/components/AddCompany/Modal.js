@@ -12,6 +12,7 @@ export default function Modal({ platformName }) {
   const [status, setStatus] = useState();
   const [check, setCheck] = useState(false);
   const navigate = useNavigate();
+  // console.log(platformName);
   const addCompanyName = ({ platformName }) => {
     addCompanyApi();
     setCompanyName("");
@@ -29,10 +30,11 @@ export default function Modal({ platformName }) {
     axios
       .get(baseURL + `api/InitializeConnection/${companyId}`)
       .then((response) => {
-        // setLink(Object.values(response?.data)[0].results[0]?.linkUrl);
-        setStatus(
-          Object.values(response?.data)[0].results[0]?.status
-        );
+        if (platformName === "sandbox") {
+          setStatus(Object.values(response?.data)[0].results[1]?.status);
+        } else {
+          setStatus(Object.values(response?.data)[0].results[0]?.status);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -53,25 +55,22 @@ export default function Modal({ platformName }) {
   }, [state]);
 
   const addCompanyApi = () => {
-    const data = { name: companyName };
+    const data = {
+      name: companyName,
+      platformType: "ndsk",
+    };
     axios
       .post(baseURL + "api/addCompany", data)
       .then((response) => {
-        setLink(Object.values(response?.data)[0].redirect);
+        if (platformName === "sandbox") {
+          setLink(Object.values(response?.data)[0].redirect);
+        } else {
+          setLink(
+            Object.values(response?.data)[0]?.dataConnections[0]?.linkUrl
+          );
+        }
+
         setCheck(true);
-        // axios
-        //   .get(
-        //     baseURL +
-        //       `api/InitializeConnection/${Object.values(response?.data)[0].id}`
-        //   )
-        //   .then((response) => {
-        //     setLink(Object.values(response?.data)[0].results[0]?.linkUrl);
-        //     setCheck(true);
-        //     // setShowModal(false);
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
         localStorage.setItem("companyId", Object.values(response?.data)[0].id);
       })
       .catch((err) => {
