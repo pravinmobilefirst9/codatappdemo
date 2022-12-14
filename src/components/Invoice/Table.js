@@ -6,6 +6,8 @@ import FormModal from "./FormModal";
 import { headerData } from "../../data/data";
 import { baseURL } from "../../data/const";
 import Search from "./Search";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Table = () => {
   const [users, setUsers] = useState([]);
@@ -30,6 +32,7 @@ const Table = () => {
       ?.payment?.id;
 
   const companyId = localStorage.getItem("companyId");
+  const companyName = localStorage.getItem("companyName");
 
   const fetchInvoice = () => {
     setLoader(true);
@@ -46,12 +49,21 @@ const Table = () => {
         if (!refreshPage) {
           setLoader(false);
         }
+        // toast.success(`${companyName}'s invoice listing`, {
+        //   position: toast.POSITION.TOP_RIGHT,
+        // });
       })
       .catch((err) => {
         console.log(err);
         if (!refresh) {
           setLoader(false);
         }
+        setTimeout(() => {
+          setLoader(false);
+        }, 8000);
+        toast.error(err?.message + ` Please try again later`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       });
   };
 
@@ -66,9 +78,18 @@ const Table = () => {
       })
       .then((response) => {
         setConnections(Object.values(response.data)[0].results);
+        // toast.success(
+        //   "connection id - " + Object.values(response.data)[0]?.results[0]?.id,
+        //   {
+        //     position: toast.POSITION.TOP_RIGHT,
+        //   }
+        // );
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err?.message + ` Please try again later`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       });
   };
 
@@ -128,8 +149,9 @@ const Table = () => {
 
   return (
     <div className="p-5 mt-10 lg:mt-2 lg:p-10">
+      <ToastContainer />
       <h4 className="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-        Invoices list
+        {companyName} Invoices list
       </h4>
       <div className="float-right m-5 w-48 sm:w-64">
         <Search setQuery={setQuery} />
