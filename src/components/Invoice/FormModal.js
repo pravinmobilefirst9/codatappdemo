@@ -3,6 +3,8 @@ import axios from "axios";
 import { modalFormData } from "../../data/data";
 import { Oval } from "react-loader-spinner";
 import { baseURL } from "../../data/const";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FormModal = ({
   modalData,
@@ -105,14 +107,34 @@ const FormModal = ({
           .then((response) => {
             setLoader(false);
             setDataTrue(true);
+            toast.success(
+              `Payment reconciled successfully for ${modalData?.customerRef?.companyName}`,
+              {
+                position: toast.POSITION.TOP_RIGHT,
+              }
+            );
           })
           .catch((err) => {
             console.log(err);
+            toast.error(
+              err?.message +
+                ` Please try again later for ${modalData?.customerRef?.companyName}`,
+              {
+                position: toast.POSITION.TOP_RIGHT,
+              }
+            );
           });
       })
       .catch((err) => {
         console.log(err);
         setLoader(false);
+        toast.error(
+          err?.message +
+            ` Please try again later for ${modalData?.customerRef?.companyName}`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+          }
+        );
       });
   };
 
@@ -137,6 +159,7 @@ const FormModal = ({
     ) / 100;
   return (
     <div>
+      <ToastContainer />
       {showModal && (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto absolute top-0 z-50 lg:outline-none lg:focus:outline-none">
