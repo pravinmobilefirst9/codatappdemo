@@ -16,7 +16,13 @@ const LinkAccount = () => {
 
   const authApiCall = () => {
     axios
-      .get(baseURL + `api/InitializeConnection/${companyId}`)
+      .get(baseURL + `api/InitializeConnection/${companyId}`, {
+        headers: {
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      })
       .then((response) => {
         setStatus(Object.values(response?.data)[0].results[0]?.status);
       })

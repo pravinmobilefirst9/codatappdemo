@@ -34,7 +34,13 @@ const Table = () => {
   const fetchInvoice = () => {
     setLoader(true);
     axios
-      .get(baseURL + `api/fetchInvoice/${companyId}`)
+      .get(baseURL + `api/fetchInvoice/${companyId}`, {
+        headers: {
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      })
       .then((response) => {
         setUsers(Object.values(response.data)[0].results);
         if (!refreshPage) {
@@ -51,7 +57,13 @@ const Table = () => {
 
   const fetchConnections = () => {
     axios
-      .get(baseURL + `api/fetchConnections/${companyId}`)
+      .get(baseURL + `api/fetchConnections/${companyId}`, {
+        headers: {
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      })
       .then((response) => {
         setConnections(Object.values(response.data)[0].results);
       })
