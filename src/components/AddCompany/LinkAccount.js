@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { baseURL } from "../../data/const";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LinkAccount = () => {
   const [status, setStatus] = useState();
@@ -25,9 +27,15 @@ const LinkAccount = () => {
       })
       .then((response) => {
         setStatus(Object.values(response?.data)[0].results[0]?.status);
+        toast.success(`Redirect to the invoice page`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err?.message + ` Please try to create new company`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       });
   };
 
