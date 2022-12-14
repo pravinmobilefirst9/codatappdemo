@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../../data/const";
 import { Oval } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Modal({ platformName }) {
   const [showModal, setShowModal] = useState(false);
@@ -11,8 +13,8 @@ export default function Modal({ platformName }) {
   const [state, setState] = useState();
   const [status, setStatus] = useState();
   const [check, setCheck] = useState(false);
+  const [buttonOvel, setButtonOvel] = useState(false);
   const navigate = useNavigate();
-  // console.log(platformName);
   const addCompanyName = ({ platformName }) => {
     addCompanyApi();
     setCompanyName("");
@@ -61,6 +63,7 @@ export default function Modal({ platformName }) {
   }, [state]);
 
   const addCompanyApi = () => {
+    setButtonOvel(true);
     const data = {
       name: companyName,
       platformType: "ndsk",
@@ -78,14 +81,24 @@ export default function Modal({ platformName }) {
 
         setCheck(true);
         localStorage.setItem("companyId", Object.values(response?.data)[0].id);
+        localStorage.setItem("companyName", companyName);
+        setButtonOvel(false);
+        toast.success(`Company created please link it with ${platformName}`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       })
       .catch((err) => {
         console.log(err);
+        toast.error(err?.message + ` Please try again later`, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setButtonOvel(false);
       });
   };
 
   return (
     <>
+      <ToastContainer />
       <button
         className="bg-pink-500 text-white hover:bg-pink-600 mt-5 px-5 py-3 font-medium leading-5 transition-colors duration-150 border border-transparent rounded-lg"
         type="button"
@@ -173,7 +186,22 @@ export default function Modal({ platformName }) {
                         onClick={addCompanyName}
                         disabled={companyName.length > 0 ? false : true}
                       >
-                        Add
+                        {buttonOvel ? (
+                          <Oval
+                            height={20}
+                            width={20}
+                            color="white"
+                            wrapperStyle={{}}
+                            wrapperclassName=""
+                            visible={true}
+                            ariaLabel="oval-loading"
+                            secondaryColor="black"
+                            strokeWidth={2}
+                            strokeWidthSecondary={2}
+                          />
+                        ) : (
+                          "Add"
+                        )}
                       </button>
                     </div>
                   </div>
