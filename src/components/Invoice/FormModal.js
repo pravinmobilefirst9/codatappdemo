@@ -75,10 +75,7 @@ const FormModal = ({
       companyName: modalData?.customerRef?.companyName,
     },
     date: finalDate,
-    totalAmount:
-      modalData?.status === "PartiallyPaid"
-        ? paymentAmount
-        : modalData?.totalAmount,
+    totalAmount: paymentAmount,
     note: note,
     lines: [
       {
@@ -94,12 +91,21 @@ const FormModal = ({
     ],
   };
 
+  const headers = {
+    "Cache-Control": "no-cache",
+    Pragma: "no-cache",
+    Expires: "0",
+  };
+
   const fetchPaymentData = () => {
     setLoader(true);
     axios
       .post(
         baseURL + `api/pushPaymentData/${companyId}/${connections[0]?.id}`,
-        dataQuickbook
+        dataQuickbook,
+        {
+          headers: headers,
+        }
       )
       .then((response) => {
         axios
@@ -116,9 +122,10 @@ const FormModal = ({
           })
           .catch((err) => {
             console.log(err);
+            setLoader(false);
             toast.error(
               err?.message +
-                ` Please try again later for ${modalData?.customerRef?.companyName}`,
+                ` Please refresh the page and try again for ${modalData?.customerRef?.companyName}`,
               {
                 position: toast.POSITION.TOP_RIGHT,
               }
@@ -130,7 +137,7 @@ const FormModal = ({
         setLoader(false);
         toast.error(
           err?.message +
-            ` Please try again later for ${modalData?.customerRef?.companyName}`,
+            ` Please refresh the page and try again for ${modalData?.customerRef?.companyName}`,
           {
             position: toast.POSITION.TOP_RIGHT,
           }
@@ -144,9 +151,9 @@ const FormModal = ({
     setLoader(false);
     setShowModal(false);
     setRefresh(!refresh);
-    if (modalData?.status === "PartiallyPaid") {
-      setRefreshPage(true);
-    }
+    // if (modalData?.status === "PartiallyPaid") {
+    setRefreshPage(true);
+    // }
   };
 
   const handleReconciliation = () => {
