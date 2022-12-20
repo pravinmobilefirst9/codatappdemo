@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Logo from "../../assets/img/codat.png";
 const titleGet = localStorage.getItem("companyLogo");
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
@@ -20,20 +21,18 @@ const Sidebar = () => {
     <div>
       <aside className="shadow-xl h-screen flex-shrink-0 hidden w-64 bg-white dark:bg-gray-800 lg:block">
         <div className="py-4 text-gray-500 dark:text-gray-400">
-          <div className="ml-6 font-bold text-black text-sm">
+          {/* <div className="ml-6 font-bold text-black text-sm">
             Company Name :{" "}
-          </div>
-          <div
-            className="ml-6 border-2 mr-4 px-4 text-xl font-bold text-gray-800 dark:text-gray-200"
-            href="#"
-          >
-            <input
+          </div> */}
+          <div className="p-5 flex items-center justify-center">
+            <img src={Logo} alt="codat logo" className="w-48" />
+            {/* <input
               type="text"
               className="focus:outline-none w-48"
               value={title === "null" ? "" : title}
               placeholder="Ex. CODAT.IO"
               onChange={(e) => handleInputChange(e)}
-            />
+            /> */}
           </div>
           <ul className="mt-6">
             <li className="relative px-6 py-3">
@@ -61,7 +60,7 @@ const Sidebar = () => {
       </aside>
 
       {/* mobile display */}
-      <div className="w-screen bg-white lg:hidden">
+      <div className="w-screen flex items-center justify-start bg-white lg:hidden">
         <button
           className="p-5 mr-5 -ml-1 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple"
           aria-label="Menu"
@@ -81,16 +80,14 @@ const Sidebar = () => {
           </svg>
         </button>
         <div className="lg:hidden">
-          <div
-            className="-mt-12 ml-16 text-2xl font-bold text-gray-800 dark:text-gray-200"
-            href="#"
-          >
-            <input
+          <div className="">
+            {/* <input
               type="text"
               className="focus:outline-none"
               value={title}
               onChange={(e) => handleInputChange(e)}
-            />
+            /> */}
+            <img src={Logo} alt="codat logo" className="w-20" />
           </div>
         </div>
       </div>
