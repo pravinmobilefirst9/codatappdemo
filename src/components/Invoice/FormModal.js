@@ -28,17 +28,15 @@ const FormModal = ({
   const companyId = localStorage.getItem("companyId");
 
   var current = new Date();
-  var date = current.getDate();
+  var date = ("0" + current.getDate()).slice(-2);
   var year = current.getFullYear();
-  var month = current.getMonth();
-  var hour = current.getHours();
-  var min = current.getMinutes();
-  var sec = current.getSeconds();
+  var month = ("0" + (current.getMonth() + 1)).slice(-2);
+  var hour = ("0" + current.getHours()).slice(-2);
+  var min = ("0" + current.getMinutes()).slice(-2);
+  var sec = ("0" + current.getSeconds()).slice(-2);
 
-  var finalDate = `${year}-${month + 1}-${date}T${hour}:${min}:${Math.round(
-    sec
-  )}`;
-
+  var finalDate = `${year}-${month}-${date}T${hour}:${min}:${sec}`;
+  console.log(finalDate);
   const dataSandbox = {
     customerRef: {
       id: modalData?.customerRef?.id,
@@ -123,9 +121,8 @@ const FormModal = ({
           .catch((err) => {
             console.log(err);
             setLoader(false);
-            toast.error(
-              err?.message +
-                ` Please refresh the page and try again for ${modalData?.customerRef?.companyName}`,
+            toast.success(
+              `We have submitted your payment for reconciliation, It may take while to update from bank server.`,
               {
                 position: toast.POSITION.TOP_RIGHT,
               }
@@ -151,13 +148,22 @@ const FormModal = ({
     setLoader(false);
     setShowModal(false);
     setRefresh(!refresh);
-    // if (modalData?.status === "PartiallyPaid") {
-    setRefreshPage(true);
-    // }
+    if (modalData?.status === "PartiallyPaid") {
+      setRefreshPage(true);
+    }
   };
 
   const handleReconciliation = () => {
-    fetchPaymentData();
+    if (paymentAmount > modalData?.totalAmount) {
+      toast.error(
+        ` Payment amount is higher than total amount for ${modalData?.customerRef?.companyName}`,
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
+    } else {
+      fetchPaymentData();
+    }
   };
 
   const remainingAmount =
@@ -247,6 +253,11 @@ const FormModal = ({
                                             : "bg-slate-200"
                                         } w-full mt-1 text-lg`}
                                         placeholder={`Please Enter ${data?.title}`}
+                                        type={
+                                          data?.title === "Payment Amount"
+                                            ? "number"
+                                            : "text"
+                                        }
                                         onChange={(e) =>
                                           setPaymentAmount(e.target.value)
                                         }
