@@ -121,6 +121,7 @@ const FormModal = ({
           .catch((err) => {
             console.log(err);
             setLoader(false);
+            setDataTrue(true);
             toast.success(
               `We have submitted your payment for reconciliation, It may take while to update from bank server.`,
               {
@@ -134,7 +135,7 @@ const FormModal = ({
         setLoader(false);
         toast.error(
           err?.message +
-            ` Please refresh the page and try again for ${modalData?.customerRef?.companyName}`,
+            ` Please try again for ${modalData?.customerRef?.companyName}`,
           {
             position: toast.POSITION.TOP_RIGHT,
           }
@@ -154,9 +155,17 @@ const FormModal = ({
   };
 
   const handleReconciliation = () => {
-    if (paymentAmount > modalData?.totalAmount) {
+    if (
+      paymentAmount > modalData?.totalAmount ||
+      paymentAmount < 0 ||
+      paymentAmount < 0.0001
+    ) {
       toast.error(
-        ` Payment amount is higher than total amount for ${modalData?.customerRef?.companyName}`,
+        `${
+          paymentAmount < 0 || paymentAmount < 0.0001
+            ? "Please increase payment amount for"
+            : "Payment amount is higher than total amount for"
+        } ${modalData?.customerRef?.companyName}`,
         {
           position: toast.POSITION.TOP_RIGHT,
         }
