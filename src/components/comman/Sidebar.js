@@ -25,7 +25,11 @@ const Sidebar = () => {
             Company Name :{" "}
           </div> */}
           <div className="p-5 flex items-center justify-center">
-            <img src={Logo} alt="codat logo" className="w-48" />
+            <img
+              src="https://image-wine.vercel.app/codat.png"
+              alt="codat logo"
+              className="w-40 object-cover"
+            />
             {/* <input
               type="text"
               className="focus:outline-none w-48"
@@ -87,7 +91,11 @@ const Sidebar = () => {
               value={title}
               onChange={(e) => handleInputChange(e)}
             /> */}
-            <img src={Logo} alt="codat logo" className="w-20" />
+            <img
+              src="https://image-wine.vercel.app/codat.png"
+              alt="codat logo"
+              className="object-cover w-20"
+            />
           </div>
         </div>
       </div>
