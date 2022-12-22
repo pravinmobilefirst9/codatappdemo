@@ -36,7 +36,7 @@ const FormModal = ({
   var sec = ("0" + current.getSeconds()).slice(-2);
 
   var finalDate = `${year}-${month}-${date}T${hour}:${min}:${sec}`;
-  console.log(finalDate);
+  
   const dataSandbox = {
     customerRef: {
       id: modalData?.customerRef?.id,
