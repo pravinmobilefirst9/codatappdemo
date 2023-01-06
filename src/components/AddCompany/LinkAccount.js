@@ -41,8 +41,8 @@ const LinkAccount = () => {
 
   return (
     <div>
-      <div className="mt-5 xl:mt-0">
-        <div className="relative w-[100vw] xl:w-[50vw] p-5 bg-slate-50 h-[50vh] xl:h-[100vh] flex items-center justify-center flex-col">
+      <div className="mt-0 xl:mt-0">
+        <div className="relative w-[100vw] xl:w-[50vw] pt-12 xl:pt-5 p-5 bg-slate-50 h-[50vh] xl:h-[100vh] flex items-center justify-center flex-col">
           <div className="text-4xl mx-5">Redirect to Invoice page</div>
           <div className="text-lg m-5">
             Click below button after authenticate your account
@@ -65,7 +65,7 @@ const LinkAccount = () => {
           <img
             src="https://image-wine.vercel.app/codat.png"
             alt="codat logo"
-            className="w-40 xl:w-60 object-cover"
+            className="w-40 object-cover"
           />
         </div>
       </div>
