@@ -27,6 +27,7 @@ const SoftwareButton = () => {
 
   const selectAuth = (data) => {
     // getToken();
+    localStorage.setItem("accountingSoftware", data?.name);
     if (data?.name === "sandbox" || data?.name === "quickbooksonline") {
       navigate("/add-company", { state: data?.name });
     }
