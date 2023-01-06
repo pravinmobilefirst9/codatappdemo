@@ -26,7 +26,7 @@ const FormModal = ({
   const [note, setNote] = useState("note");
 
   const companyId = localStorage.getItem("companyId");
-
+  const accountingSoftware = localStorage.getItem("accountingSoftware");
   var current = new Date();
   var date = ("0" + current.getDate()).slice(-2);
   var year = current.getFullYear();
@@ -36,7 +36,7 @@ const FormModal = ({
   var sec = ("0" + current.getSeconds()).slice(-2);
 
   var finalDate = `${year}-${month}-${date}T${hour}:${min}:${sec}`;
-  
+
   const dataSandbox = {
     customerRef: {
       id: modalData?.customerRef?.id,
@@ -134,8 +134,10 @@ const FormModal = ({
         console.log(err);
         setLoader(false);
         toast.error(
-          err?.message +
-            ` Please try again for ${modalData?.customerRef?.companyName}`,
+          accountingSoftware === "sandbox"
+            ? "Not allow to change in sandbox demo data"
+            : err?.message +
+                ` Please try again for ${modalData?.customerRef?.companyName}`,
           {
             position: toast.POSITION.TOP_RIGHT,
           }
