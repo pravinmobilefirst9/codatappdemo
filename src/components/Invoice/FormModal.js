@@ -99,7 +99,12 @@ const FormModal = ({
     setLoader(true);
     axios
       .post(
-        baseURL + `api/pushPaymentData/${companyId}/${connections[0]?.id}`,
+        baseURL +
+          `api/pushPaymentData/${companyId}/${
+            connections[0].status === "Linked"
+              ? connections[0]?.id
+              : connections[1]?.id
+          }`,
         dataQuickbook,
         {
           headers: headers,
