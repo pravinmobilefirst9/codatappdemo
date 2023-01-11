@@ -39,7 +39,9 @@ const Redirect = () => {
       })
       .then((response) => {
         if (Object.values(response?.data)[0].results[0]?.status === "Linked") {
-          // navigate("/invoice");
+          setLink(true);
+        }
+        if (Object.values(response?.data)[0].results[1]?.status === "Linked") {
           setLink(true);
         }
       })
