@@ -87,7 +87,13 @@ const Redirect = () => {
 
             {/* </button> */}
           </div>
-          <div className="absolute top-10 left-10 text-4xl">CODAT.IO</div>
+          <div className="absolute top-2 left-2 md:top-5 md:left-5 xl:top-10 xl:left-10 text-4xl">
+            <img
+              src="https://image-wine.vercel.app/codat.png"
+              alt="codat logo"
+              className="w-40 object-cover"
+            />
+          </div>
         </div>
       </div>
     </div>
