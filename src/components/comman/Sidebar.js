@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/img/codat.png";
+import { logoImg } from "../../data/const";
 const titleGet = localStorage.getItem("companyLogo");
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
@@ -26,7 +27,7 @@ const Sidebar = () => {
           </div> */}
           <div className="p-5 flex items-center justify-center">
             <img
-              src="https://image-wine.vercel.app/codat.png"
+              src={logoImg}
               alt="codat logo"
               className="w-40 object-cover"
             />
@@ -92,7 +93,7 @@ const Sidebar = () => {
               onChange={(e) => handleInputChange(e)}
             /> */}
             <img
-              src="https://image-wine.vercel.app/codat.png"
+              src={logoImg}
               alt="codat logo"
               className="object-cover w-20"
             />

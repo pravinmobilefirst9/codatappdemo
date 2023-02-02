@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { baseURL } from "../data/const";
+import { baseURL, logoImg } from "../data/const";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
@@ -89,7 +89,7 @@ const Redirect = () => {
           </div>
           <div className="absolute top-2 left-2 md:top-5 md:left-5 xl:top-10 xl:left-10 text-4xl">
             <img
-              src="https://image-wine.vercel.app/codat.png"
+              src={logoImg}
               alt="codat logo"
               className="w-40 object-cover"
             />
