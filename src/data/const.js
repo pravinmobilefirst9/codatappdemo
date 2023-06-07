@@ -1,8 +1,8 @@
 // base url
-export const baseURL = "https://codatnodeappbe.vercel.app/";
+export const baseURL = "https://codatnodeappbe-five.vercel.app/";
 
 // img url
-export const logoImg = "https://image-wine.vercel.app/codat.png";
+export const logoImg = "/codat.png";
 
 // extra urls
 export const authUrl =
